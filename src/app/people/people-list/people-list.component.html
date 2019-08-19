@@ -1,0 +1,42 @@
+<div style="text-align: center" *ngIf="loading; else peopleTable">
+  <p-progressSpinner ></p-progressSpinner>
+</div>
+
+<ng-template #peopleTable>
+  <p-card>
+    <p-header>
+      <div class="card-header">
+        Pessoas
+        <button [routerLink]="['/create']" routerLinkActive="router-link-active"  pButton type="button" label="Adicionar Pessoa" class="ui-button-raised ui-button-secondary"></button>
+      </div>
+    </p-header>
+    <p-table [value]="people" [paginator]="true" [rows]="10" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-person>
+            <tr>
+                <td>{{ person.id }}</td>
+                <td>{{ person.name }}</td>
+                <td>{{ person.age }}</td>
+                <td>
+                  <a [routerLink]="['/edit/', person.id]" pTooltip="Editar" class="list-actions">
+                    <i class="pi pi-user-edit"></i>
+                  </a>
+
+                  <a (click)="deletePerson(person)" pTooltip="Excuir" class="list-actions">
+                    <i class="pi pi-times"></i>
+                  </a>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </p-card>
+</ng-template>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

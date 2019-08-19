@@ -1,0 +1,131 @@
+<p-toast position="top-right"></p-toast>
+<div class="ui-g ui-fluid">
+    <form [formGroup]="peopleForm" (ngSubmit)="onSubmit()">
+        <div class="ui-g-12 ui-md-12">
+            <h4>Dados Pessoais</h4>
+            <div class="ui-g-12 ui-md-6">
+                <label class="required" for="name">Nome da Pessoa</label>
+                <div class="ui-inputgroup">
+                    <input id="name" pInputText formControlName="name" placeholder="Ex: Jack"
+                    type="text" maxlength="50">
+                </div>
+                <div class="ui-grid-col-12">
+                    <p-message severity="error" text="Nome é obrigatório!" *ngIf="validationHelper('name')"></p-message>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-2">
+                <label class="required" for="age">Idade</label>
+                <div class="ui-inputgroup">
+                    <input id="age" pInputText formControlName="age" placeholder="Ex: 19" type="number" maxlength="3">
+                </div>
+                <div class="ui-grid-col-12">
+                    <p-message severity="error" text="Idade é obrigatório!" *ngIf="validationHelper('age')"></p-message>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-g-12 ui-md-12" formGroupName="address">
+            <h4>Endereço</h4>
+            <div class="ui-g-12 ui-md-2">
+                <label class="required" for="addresstype">Tipo</label>
+                <div class="ui-inputgroup">
+                    <input id="addresstype" pInputText formControlName="type" placeholder="Rua, Avenida, etc..."
+                    type="type" maxlength="50">
+                </div>
+                <div class="ui-grid-col-12">
+                    <p-message severity="error" text="Tipo de endereço é obrigatório!" *ngIf="validationHelper(['address', 'type'])"></p-message>
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+                <label class="required" for="addressname">Nome</label>
+                <div class="ui-inputgroup">
+                    <input id="addressname" pInputText formControlName="name" placeholder="Ex. Rua Jose Avelino"
+                    type="text" maxlength="100">
+                </div>
+            </div>
+            
+            <div class="ui-g-12 ui-md-2">
+                <label class="required" for="addressnumber">Numero</label>
+                <div class="ui-inputgroup">
+                    <input id="addressnumber" pInputText formControlName="number" placeholder="Ex: 99999" type="text" maxlength="8">
+                </div>
+            </div>
+
+            <div class="ui-g-12 ui-md-2">
+                <label class="required" for="addresszipcode">CEP</label>
+                <div class="ui-inputgroup">
+                    <input id="addresszipcode" pInputText formControlName="zipcode" placeholder="Ex: 36900-000" type="text" maxlength="10">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ui-g-12 ui-md-12" formGroupName="phones">
+            <h4>Contato</h4>
+            <span>Adicionar telefone </span>
+            <a pButton icon="pi pi-plus"
+                (click)="addPhone()"
+                class="ui-button-raised ui-button-secondary"
+            ></a>
+            
+            <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i">
+                <div class="ui-g-12 ui-md-2">
+                    <label class="required" for="type">Tipo</label>
+                    <div class="ui-inputgroup">
+                        <p-dropdown [options]="phoneTypes" formControlName="type" #phoneType></p-dropdown>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                    <label class="required" for="ddi">DDI</label>
+                    <div class="ui-inputgroup">
+                        <input id="ddi" pInputText formControlName="ddi" placeholder="Ex: +9999" type="text" maxlength="5">
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    <label class="required" for="ddd">DDD</label>
+                    <div class="ui-inputgroup">
+                        <input id="ddd" pInputText formControlName="ddd" placeholder="Ex: 99" type="text" maxlength="2">
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-2">
+                    <label class="required" for="ext">Ramal</label>
+                    <div class="ui-inputgroup">
+                        <input id="ext" pInputText formControlName="ext" placeholder="Ex: 999999" type="text" maxlength="6">
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-4" *ngIf="phoneType.value">
+                    <label class="required" for="number">Numero de telefone</label>
+                    <div class="ui-inputgroup">
+                        <input id="number" pInputText formControlName="number" placeholder="Ex: 999999" type="text" maxlength="10">
+                        <a pButton icon="pi pi-minus" style="padding-left: 1rem"
+                            (click)="removePhone(i)"
+                            class="ui-button-raised ui-button-secondary"
+                        ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p-footer>
+            <div class="ui-g-12 ui-md-2">
+                <button type="submit" pButton
+                    label="Enviar"
+                    class="ui-button-raised ui-button-primary"
+                    [disabled]="peopleForm.invalid"
+                ></button>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+                <button type="reset" pButton
+                    label="Limpar"
+                    class="ui-button-raised ui-button-danger"
+                    (click)="peopleForm.reset()"
+                ></button>
+            </div>
+        </p-footer>
+    </form>
+</div>

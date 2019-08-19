@@ -1,0 +1,14 @@
+<p-toast position="top-right"></p-toast>
+<div style="text-align: center" *ngIf="loading; else personEdit">
+    <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+</div>
+<ng-template #personEdit>
+    <p-card>
+        <p-header>
+            <div class="card-header">
+            Editando Pessoa
+            </div>
+        </p-header>
+        <app-people-form (formEmmiter)="editForm($event)" [person]="person"></app-people-form>
+    </p-card>
+</ng-template>

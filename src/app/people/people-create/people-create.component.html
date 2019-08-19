@@ -1,0 +1,14 @@
+<p-toast position="top-right"></p-toast>
+<div style="text-align: center" *ngIf="loading;">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+
+<p-card>
+    <p-header>
+        <div class="card-header">
+        Adicionar Pessoa
+        </div>
+    </p-header>
+
+    <app-people-form (formEmmiter)="createForm($event)" [person]="person"></app-people-form>
+</p-card>
